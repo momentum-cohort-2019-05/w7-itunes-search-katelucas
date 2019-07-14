@@ -2,11 +2,11 @@ function q (sel) {
     return document.querySelector(sel)
   }
   
-  function qs (sel) {
+function qs (sel) {
     return document.querySelectorAll(sel)
   }
   
-  function artistNode (artist) {
+function artistNode (artist) {
     const artistDiv = document.createElement('div')
     artistDiv.classList.add('planet', 'ba', 'bw2', 'purple')
     artistDiv.innerHTML = `
@@ -19,8 +19,8 @@ function q (sel) {
     return artistDiv
   }
   
-    function displaySearchData (searchUrl) {
-        fetch(searchUrl)
+function displaySearchData (searchUrl) {
+      fetch(searchUrl)
       .then(res => res.json())
       .then(function (data) {
         const dataDisplay = q('#search-data')
@@ -37,6 +37,8 @@ function q (sel) {
   }
   
   /* Main execution */
+
+  
   
   document.addEventListener('DOMContentLoaded', function () {
     q('#search-results').addEventListener('click', function (event) {
@@ -44,17 +46,16 @@ function q (sel) {
       if (event.target && event.target.matches('button.get-search-data')) {
         displaySearchData(event.target.dataset['url'])
       }
-    })
+    })  
+  })
   
     q('form').addEventListener('submit', function (event) {
       event.preventDefault()
       const searchTerm = q('#artist-name').value
-      const url = `https://itunes-api-proxy.glitch.me/`
+      const cleanSearch = encodeURIComponent(searchTerm)
+      const url = `https://itunes-api-proxy.glitch.me/search?term=${cleanSearch}&limit=10&media=music`
       const resultsDiv = q('#search-results')
-
-    //   cleanSearch = encodeURIComponent(searchTerm)
-    //   fetch(`https://itunes-api-proxy.glitch.me/search?term=${cleanSearch}&limit=10&media=music`)
-
+    
   
       fetch(url)
         .then(response => response.json())
@@ -66,5 +67,5 @@ function q (sel) {
           }
         })
     })
-  })
+  
   
